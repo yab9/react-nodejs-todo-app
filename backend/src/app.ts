@@ -42,12 +42,6 @@ app.use("/api/todos", verifyToken, todoRoutes);
 // 認証機能を担当する各ルートを読み込む
 app.use("/api/auth", authRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  const staticDir = path.join(__dirname, "../../frontend/dist");
-  app.use(express.static(staticDir));
-  app.get("/{*splat}",(_,res) => res.sendFile(path.join(staticDir,"index.html")));
-}
-
 // 定義したルート以外へのアクセスに対する処理（404 Not Found）
 app.use((req: Request, res: Response) => {
   res.status(404).set("Content-Type", "text/html; charset=utf-8");
